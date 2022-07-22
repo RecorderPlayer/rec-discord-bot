@@ -11,7 +11,7 @@ This is source code of RecorderPlayer Bot.
 1. Create a venv environment `python -m venv ./venv` and activate it `source venv/bin/activate`
 2. Create `.env` file in main direction and insert values from `.env.example`
   ```
-  # DEBAG MODE of WebApp. If it's true, all exception will show you.
+  # DEBAG MODE of bot. If it's true, all exception will stop bot.
   DEBUG_MODE=
   TOKEN=
   
