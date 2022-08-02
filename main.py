@@ -26,6 +26,7 @@ bot = interactions.Client(token=TOKEN,
                             )
                         ]
                     ))
+bot.load('cogs.cog')
 
 # On ready event
 @bot.event()
@@ -40,35 +41,6 @@ async def on_ready():
 )
 async def test(ctx: interactions.CommandContext):
     await ctx.send("Hi there!")
-
-# Register user
-@bot.command(
-    name="register",
-    description="Register",
-    scope=986529390064189451,
-    options=[
-        interactions.Option(
-            type=interactions.OptionType.STRING,
-            name='wallet',
-            description='Wallet address',
-            required=True
-        ),
-        interactions.Option(
-            type=interactions.OptionType.STRING,
-            name='instagram',
-            description='Instagram username',
-            required=True
-        ),
-        interactions.Option(
-            type=interactions.OptionType.INTEGER,
-            name='telegram',
-            description='Telegram UID',
-            required=True
-        )
-    ]
-)
-async def reg(ctx: interactions.CommandContext, wallet: str, instagram: str, telegram: int):
-    await ctx.send(f"{wallet}, {instagram}, {telegram}")
 
 # Start bot
 bot.start()
