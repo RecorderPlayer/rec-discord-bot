@@ -32,7 +32,10 @@ bot = interactions.Client(token=TOKEN,
                             )
                         ]
                     ))
-bot.load('cogs.cog')
+
+# Load cogs
+bot.load('cogs.register')
+bot.load('cogs.tags')
 
 # Connect to database
 conn = database.connect(
@@ -59,45 +62,6 @@ async def on_ready():
 )
 async def test(ctx: interactions.CommandContext):
     await ctx.send("Hi there!")
-
-wallet = interactions.TextInput(
-    style=interactions.TextStyleType.SHORT,
-    label="Type your cryptowallet below:",
-    custom_id="wallet_responce",
-    min_length=26,
-    max_length=36,
-)
-insta = interactions.TextInput(
-    style=interactions.TextStyleType.SHORT,
-    label="Type your instagram username below:",
-    custom_id="insta_responce",
-    min_length=1,
-    max_length=30,
-)
-tg = interactions.TextInput(
-    style=interactions.TextStyleType.SHORT,
-    label="Type your telegram username below:",
-    custom_id="telegram_responce",
-    min_length=5,
-    max_length=32,
-)
-@bot.command(
-    name='reg',
-    description='reg',
-    scope=986529390064189451,
-)
-async def my_cool_modal_command(ctx):
-    modal = interactions.Modal(
-        title="Application Form",
-        custom_id="mod_app_form",
-        components=[wallet, insta, tg],
-    )
-
-    await ctx.popup(modal)
-
-@bot.modal("mod_app_form")
-async def modal_response(ctx, wallet, insta, tg):
-    await ctx.send(f"You wrote: {wallet, insta, tg}", ephemeral=True)
 
 # Start bot
 bot.start()

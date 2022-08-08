@@ -1,3 +1,5 @@
 discord-py-interactions
+interactions-files
 python-dotenv
 psycopg2
+cryptoaddress
