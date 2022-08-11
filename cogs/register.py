@@ -1,10 +1,22 @@
 import interactions
 from cryptoaddress import EthereumAddress
 import requests
+from modules.database import Database
+import os
+
+DBNAME = os.getenv('DB_NAME')
+USER = os.getenv('DB_USER')
+PASSWD = os.getenv('DB_PASSWD')
 
 class Register(interactions.Extension):
     def __init__(self, client):
         self.client: interactions.Client = client
+        self.db = Database(
+            host='localhost', 
+            dbname=DBNAME, 
+            user=USER,
+            passwd=PASSWD
+        )
 
     @interactions.extension_command(
         name='register',
@@ -60,7 +72,15 @@ class Register(interactions.Extension):
         x=requests.get(instagram+insta)
         if x.status_code == 200:
             insta_valid = ":white_check_mark:"
-        await ctx.send(f"**Validating your info...**\nCryptowallet address - {wallet_valid}\nInstagram username  - {insta_valid}\nTelegram UID               - ......", ephemeral=True)
+        if not insta.startswith("@"): 
+            insta = "@" + insta
+        res = self.db.write_user(wallet, insta, tg)
+        if res == True:
+            await ctx.send(f"**Succesfull!...**\nCryptowallet address - {wallet}\nInstagram username  - {insta}\nTelegram UID               - {tg}", ephemeral=True)
+        elif res == "alr":
+            await ctx.send("**Failed!**\nThis account is already exist!", ephemeral=True)
+        elif res == False:
+            await ctx.send(f"**Failed!...**\nCryptowallet address - {wallet_valid}\nInstagram username  - {insta_valid}", ephemeral=True)
 
 def setup(client):
     Register(client)

@@ -22,7 +22,7 @@ class Tags(interactions.Extension):
     )
     async def telegram(self, ctx):
         try:
-            file = interactions.File(filename="./video_examples/tag_register_telegram.mov")
+            file = interactions.File(filename="./video_examples/telegram_uid.gif")
             await command_send(ctx, "Here is how you can find your Telegram ID:\n**1)** Open Telegram\n**2)** Search for `userinfobot`\n**3)** Press start, and copy your id\n\nVideo example:", files=file)
         except FileNotFoundError:
             await ctx.send("ERROR - Failed to locate video file...")
@@ -32,7 +32,7 @@ class Tags(interactions.Extension):
     )
     async def instagram(self, ctx):
         try:
-            file = interactions.File(filename="./video_examples/tag_register_instagram.mov")
+            file = interactions.File(filename="./video_examples/instagram_username.mov")
             await command_send(ctx, "Here is how you can find your Instagram username:\n**1)** Open Instagram\n**2)** Click on your profile picture\n**3)** Here you cand find your username\n\nVideo example:", files=file)
         except FileNotFoundError:
             await ctx.send("ERROR - Failed to locate video file...")
@@ -42,7 +42,7 @@ class Tags(interactions.Extension):
     )
     async def wallet(self, ctx):
         try:
-            file = interactions.File(filename="./video_examples/tag_register_wallet.mov")
+            file = interactions.File(filename="./video_examples/wallet_address.mov")
             await command_send(ctx, "\nVideo example:", files=file)
         except FileNotFoundError:
             await ctx.send("ERROR - Failed to locate video file...")

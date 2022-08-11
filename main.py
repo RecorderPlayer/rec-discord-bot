@@ -11,7 +11,7 @@ import os
 import interactions
 from dotenv import load_dotenv
 import psycopg2
-from modules import database
+from modules.database import Database
 
 # Load .env file
 load_dotenv()
@@ -31,28 +31,34 @@ bot = interactions.Client(token=TOKEN,
                                 type=interactions.PresenceActivityType.LISTENING
                             )
                         ]
-                    ))
+                    ),
+                    intents=interactions.Intents.DEFAULT | interactions.Intents.GUILD_MESSAGE_CONTENT
+                    )
 
 # Load cogs
 bot.load('cogs.register')
 bot.load('cogs.tags')
 
 # Connect to database
-conn = database.connect(
+db = Database(
     host='localhost', 
     dbname=DBNAME, 
     user=USER,
     passwd=PASSWD
 )
-cursor = conn.cursor()
 
 # Create tables for database (if not exist)
-database.create_tables(cursor=cursor, connection=conn)
+db.create_tables()
 
 # On ready event
 @bot.event()
 async def on_ready():
     print('Ready')
+
+@bot.event()
+async def on_message_create(message):
+    if "sus" in message.content.lower():
+        await message.create_reaction("🤨")
 
 # Just test command
 @bot.command(
